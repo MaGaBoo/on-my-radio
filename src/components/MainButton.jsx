@@ -5,7 +5,7 @@ import SearchIcon from '@mui/icons-material/Search';
  const MainButton = () => {
   return (
     <div>
-        <Button variant="contained" startIcon={<SearchIcon />}>
+        <Button sx={{ backgroundColor: "#DD7230" }} hover={{ backgroundColor: "#E8A073" }} variant="contained" startIcon={<SearchIcon />}>
             Search
         </Button>
     </div>

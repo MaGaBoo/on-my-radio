@@ -2,19 +2,22 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { IoPlay, IoStop } from "react-icons/io5";
 import MainButton from "./components/MainButton";
+import Header from "./components/Header";
+import { Box } from "@mui/system";
+import { Input } from '@mui/material';
 
 function App() {
   const [search, setSearch] = useState("");
   const [list, setList] = useState([]);
   const url = `https://de1.api.radio-browser.info/json/stations/byname/${search}`;
   
-useEffect(()=> {
+/* useEffect(()=> {
   axios.get(url)
   .then((results) => {
     setList(results.data)
-/*   .catch((error) => console.log(error)) */
+  .catch((error) => console.log(error))
   })
-}, [url]);
+}, [url]) */
 
   const playRadio = (radio) => {
     const audio = new Audio(radio.url);
@@ -24,22 +27,24 @@ useEffect(()=> {
   return (
     <div className="container-md">
       <header className="parent">
-        <div className="container">
-          <h1>
-            <span className="text center">OnMyRadio</span>
-          </h1>
+        <div className="header-container">
+          <Header />
         </div>
 
-        <input
+        <Box sx={{ display: "flex", flexDirection: "row", justifyContent: "flex-start", my: 4 }}>
+        <Input
+          sx={{ backgroundColor: "#F1EDEE", mr: 2, borderRadius: 2, px: 0.8 }}
+          
+          disableUnderline
           type="text"
           placeholder="Search radios"
           value={search}
           onChange={(e) => setSearch(e.target.value)}
-        ></input>
+        ></Input>
         <MainButton onClick={ list ? list : <p>Loading...</p> }>
           Search
         </MainButton>
-
+        </Box>
         <section aria-label="stations-list">
           {list.length > 0 && <div aria-label="length-not-null"></div>}
           {list.map((station, i) => (
