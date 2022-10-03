@@ -18,7 +18,7 @@ const Footer = () => {
     >
       <BottomNavigationAction label="Recents" icon={<SearchIcon />} />
       <BottomNavigationAction label="Favorites" icon={<FavoriteIcon />} />
-      <BottomNavigationAction label="Nearby" icon={<FolderIcon />} />
+      <BottomNavigationAction label="Archive" icon={<FolderIcon />} />
     </BottomNavigation>
   );
 };

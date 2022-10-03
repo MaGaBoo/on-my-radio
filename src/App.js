@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import axios from "axios";
-import { IoPlay, IoStop } from "react-icons/io5";
+import { IoPlay } from "react-icons/io5";
 import MainButton from "./components/MainButton";
 import Header from "./components/Header";
 import { Box } from "@mui/system";
@@ -10,14 +10,13 @@ import Footer from "./components/Footer";
 function App() {
   const [search, setSearch] = useState("");
   const [list, setList] = useState([]);
-  const [errorMessage, setErrorMessage] = useState(null);
-
-  const url = `https://de1.api.radio-browser.info/json/stations/byname/${search}`;
 
   const doSearch = () => {
-    axios.get(url).then((results) => {
-      setList(results.data).catch((error) => setErrorMessage(error));
-    });
+    const url = `https://de1.api.radio-browser.info/json/stations/byname/${search}`;
+    axios
+      .get(url)
+      .then((response) => setList(response.data))
+      .catch((error) => console.log(error));
   };
 
   const playRadio = (radio) => {
@@ -52,27 +51,25 @@ function App() {
               type="text"
               placeholder="Search radios"
               value={search}
-              onChange={(e) => setSearch(e.target.value)}
+              onChange={e => setSearch(e.target.value)}
             ></Input>
-            <MainButton onClick={!list ? <p>Loading...</p> : () => doSearch}>
-              Search
-            </MainButton>
+            <button onClick={doSearch}>Search</button>
           </Box>
           <section aria-label="stations-list">
-            {list.length > 0 && <div aria-label="length-not-null"></div>}
-            {list.map((station, i) => (
-              <div key={i}>
-                {station.name}{" "}
-                <IoPlay className="ioPlay" onClick={() => playRadio(station)} />
-                <IoStop className="iostop" />
-              </div>
-            ))}
+            {list.length > 0 &&
+              list.map((station, i) => (
+                <ul key={i}>
+                  <li>{station.name}</li>
+                  <IoPlay
+                    className="ioPlay"
+                    onClick={() => playRadio(station)}
+                  />
+                </ul>
+              ))}
           </section>
         </header>
       </div>
-      <Footer>
-        
-      </Footer>
+      <Footer></Footer>
     </>
   );
 }
