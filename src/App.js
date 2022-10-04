@@ -1,9 +1,8 @@
 import React, { useState } from "react";
 import axios from "axios";
-import { IoPlay } from "react-icons/io5";
 import Header from "./components/Header";
 import { Box } from "@mui/system";
-import { Button, Input } from "@mui/material";
+import { Button, Grid, Input } from "@mui/material";
 import Footer from "./components/Footer";
 import RadioCard from "./components/RadioCard";
 
@@ -19,10 +18,6 @@ function App() {
       .catch((error) => console.log(error));
   };
 
-  const playRadio = (radio) => {
-    const audio = new Audio(radio.url);
-    audio.play();
-  };
 
   return (
     <>
@@ -51,16 +46,30 @@ function App() {
               type="text"
               placeholder="Search radios"
               value={search}
-              onChange={e => setSearch(e.target.value)}
+              onChange={(e) => setSearch(e.target.value)}
             ></Input>
-            <Button
-            sx={{ color: "#474056"}}
-            onClick={doSearch}>Search</Button>
+            <Button sx={{ color: "#474056" }} onClick={doSearch}>
+              Search
+            </Button>
           </Box>
           <section aria-label="stations-list">
             {list.length > 0 &&
               list.map((station, i) => (
-                <RadioCard station={station} key={i} />
+                <Grid
+                  key={i}
+                  container
+                  spacing={1}
+                  sx={{
+                    flexDirection: "column",
+                    padding: 1,
+                    maxWidth: "80%",
+                    justifyContent: "flex-start",
+                  }}
+                >
+                  <Grid>
+                    <RadioCard station={station} key={i} />
+                  </Grid>
+                </Grid>
               ))}
           </section>
         </header>
