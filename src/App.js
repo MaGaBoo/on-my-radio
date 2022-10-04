@@ -1,11 +1,11 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { IoPlay } from "react-icons/io5";
-import MainButton from "./components/MainButton";
 import Header from "./components/Header";
 import { Box } from "@mui/system";
-import { Input } from "@mui/material";
+import { Button, Input } from "@mui/material";
 import Footer from "./components/Footer";
+import RadioCard from "./components/RadioCard";
 
 function App() {
   const [search, setSearch] = useState("");
@@ -53,18 +53,14 @@ function App() {
               value={search}
               onChange={e => setSearch(e.target.value)}
             ></Input>
-            <button onClick={doSearch}>Search</button>
+            <Button
+            sx={{ color: "#474056"}}
+            onClick={doSearch}>Search</Button>
           </Box>
           <section aria-label="stations-list">
             {list.length > 0 &&
               list.map((station, i) => (
-                <ul key={i}>
-                  <li>{station.name}</li>
-                  <IoPlay
-                    className="ioPlay"
-                    onClick={() => playRadio(station)}
-                  />
-                </ul>
+                <RadioCard station={station} key={i} />
               ))}
           </section>
         </header>
